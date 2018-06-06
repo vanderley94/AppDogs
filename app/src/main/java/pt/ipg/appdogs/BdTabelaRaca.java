@@ -11,7 +11,7 @@ public class BdTabelaRaca implements BaseColumns {
     private static final String CAMPO_NOME = "nome";
     private SQLiteDatabase db;
 
-    public BdTabelaRaca(SQLiteDatabase bd) {
+    public BdTabelaRaca(SQLiteDatabase db) {
         this.db = db;
 
     }

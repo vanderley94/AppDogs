@@ -19,6 +19,12 @@ public class BdAppDogsOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         BdTabelaRaca bdTabelaRaca = new BdTabelaRaca(db);
         bdTabelaRaca.criar();
+
+        BdTabelaAcidente bdTabelaAcidente = new BdTabelaAcidente(db);
+        bdTabelaAcidente.criar();
+
+        BdTabelaTratamento bdTabelaTratamento = new BdTabelaTratamento(db);
+        bdTabelaTratamento.criar();
     }
 
     @Override

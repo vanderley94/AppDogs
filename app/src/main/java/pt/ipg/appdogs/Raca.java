@@ -4,12 +4,12 @@ public class Raca {
     private int ID;
     private String nome;
 
-    public int getIDcao() {
+    public int getID() {
         return ID;
     }
 
-    public void setIDcao(int IDcao) {
-        this.ID = IDcao;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getNome() {
