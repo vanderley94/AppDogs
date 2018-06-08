@@ -3,7 +3,7 @@ package pt.ipg.appdogs;
 public class Acidente {
     private int ID;
     private String TipoDeAcidente;
-    private int ID_Cao;
+    private int IdCao;
 
     public int getID() {
         return ID;
@@ -21,11 +21,9 @@ public class Acidente {
         TipoDeAcidente = tipoDeAcidente;
     }
 
-    public int getID_Cao() {
-        return ID_Cao;
+    public int getIdCao() {
+        return IdCao;
     }
 
-    public void setID_Cao(int ID_Cao) {
-        this.ID_Cao = ID_Cao;
-    }
+    public void setIdCao(int idCao) { IdCao = idCao; }
 }
