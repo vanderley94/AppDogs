@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class BdAppDogsOpenHelper extends SQLiteOpenHelper {
 
-    private static final String DOGS_DB = "Dogs.db";
+    public static final String DOGS_DB = "Dogs.db";
     private static final int BASEDADOS_VERSION = 1;
 
     public BdAppDogsOpenHelper(Context context){
@@ -24,7 +24,7 @@ public class BdAppDogsOpenHelper extends SQLiteOpenHelper {
         bdTabelaAcidente.criar();
 
         BdTabelaTratamento bdTabelaTratamento = new BdTabelaTratamento(db);
-        bdTabelaAcidente.criar();
+        bdTabelaTratamento.criar();
 
     }
 
