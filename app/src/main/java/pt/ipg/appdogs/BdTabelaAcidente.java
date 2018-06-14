@@ -12,7 +12,7 @@ public class BdTabelaAcidente implements BaseColumns {
     public static final String CAMPO_TIPO_DE_ACIDENTE = "TipoDeAcidente";
 
 
-    public static final String [] TODAS_COLUNAS = new String[] { _ID, CAMPO_ID_RACA, CAMPO_TIPO_DE_ACIDENTE };
+    public static final String [] ALL_COLUMNS = new String[] { _ID, CAMPO_ID_RACA, CAMPO_TIPO_DE_ACIDENTE };
 
     private SQLiteDatabase db;
     public BdTabelaAcidente(SQLiteDatabase db) {
