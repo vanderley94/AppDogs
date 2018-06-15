@@ -3,6 +3,7 @@ package pt.ipg.appdogs;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -41,6 +42,7 @@ public class AppDogsBdTests {
         db.close();
     }
 
+    @Test
     public void AcidenteCRUDtest(){
         BdAppDogsOpenHelper bdAppDogsOpenHelper = new BdAppDogsOpenHelper(getContext());
         SQLiteDatabase db =bdAppDogsOpenHelper.getWritableDatabase();
@@ -88,6 +90,76 @@ public class AppDogsBdTests {
 
         Cursor cursorU = tabelaAcidente.query(BdTabelaAcidente.ALL_COLUMNS, null, null, null, null, null);
         assertEquals("ACIDENTES found after delete ???", 0, cursorU.getCount());
+    }
+
+    @Test
+    public void racaCRUDtest(){
+        BdAppDogsOpenHelper bdAppDogsOpenHelper = new BdAppDogsOpenHelper(getContext());
+
+        SQLiteDatabase db = bdAppDogsOpenHelper.getWritableDatabase();
+
+        BdTabelaRaca tabelaRaca = new BdTabelaRaca(db);
+
+        Raca raca = new Raca();
+        raca.setNome("bullDog");
+
+        //Insert/create (C)RUD
+        long id = insertRaca(tabelaRaca,raca);
+
+        //query/read C(R)UD
+        raca = ReadFirstRaca(tabelaRaca,"Labrador",id);
+
+        //update CR(U)D
+        raca.setNome("Labrador");
+        int rowsAffected = tabelaRaca.update(
+                BdTabelaRaca.getContentValues(raca),
+                BdTabelaRaca._ID+"=?",
+                new String[]{Long.toString(id)}
+
+        );
+        assertEquals("Falhou a atulização da raça", 1, rowsAffected);
+        //query/read C(R)UD
+        raca = ReadFirstRaca(tabelaRaca,"MMMM",id);
+
+        //delete CRU(D)
+        rowsAffected = tabelaRaca.delete(
+                BdTabelaRaca._ID + "=?",
+                new String[]{Long.toString(id)}
+        );
+        assertEquals("Falhou o delete da raça", 1, rowsAffected);
+
+        Cursor cursor = tabelaRaca.query(BdTabelaRaca.ALL_COLUMNS,null,null,null,null,null);
+        assertEquals("A raça encontrada depois do delete?", 0, cursor.getCount());
+
+    }
+
+
+    private long insertRaca(BdTabelaRaca tabelaRaca, Raca raca){
+        long id = tabelaRaca.insert(BdTabelaRaca.getContentValues(raca));
+
+        assertNotEquals("Falhou a inserir uma Raça",-1,id);
+
+        return id;
+    }
+    
+    @NonNull
+    private Raca ReadFirstRaca(BdTabelaRaca tabelaRaca, String expectedNome, long expectedId){
+        Cursor cursor = tabelaRaca.query(BdTabelaRaca.ALL_COLUMNS,null,null,null,null,null );
+        assertEquals("Falhou a leitura das Raças",1,cursor.getColumnCount());
+        assertTrue("Falhou a leitura da primeira raça",cursor.moveToNext());
+
+        Raca raca = BdTabelaRaca.getCurrentRacaFromCursor(cursor);
+
+        assertEquals("Nome da raça incorreto",expectedNome,raca.getNome());
+        assertEquals("Nome da raça incorreto",expectedId,raca.getID());
+
+        assertEquals("Incorrect category name", expectedNome, raca.getNome());
+        assertEquals("Incorrect category id", expectedId, raca.getID());
+
+
+
+        return raca;
+
     }
 
 

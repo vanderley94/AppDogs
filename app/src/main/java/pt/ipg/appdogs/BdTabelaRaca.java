@@ -15,6 +15,8 @@ public class BdTabelaRaca implements BaseColumns {
     private static final String CAMPO_NOME = "nome";
     private SQLiteDatabase db;
 
+    public static final String [] ALL_COLUMNS = new String[] { _ID, CAMPO_NOME };
+
     public BdTabelaRaca(SQLiteDatabase db) {
         this.db = db;
 
@@ -66,5 +68,10 @@ public class BdTabelaRaca implements BaseColumns {
     public int delete(String whereClause, String[] whereArgs) {
         return db.delete(NOME_TABELA, whereClause, whereArgs);
     }
+
+    public Cursor query (String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
+        return db.query(NOME_TABELA, columns, selection, selectionArgs, groupBy, having, orderBy);
+    }
+
 
 }

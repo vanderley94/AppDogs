@@ -11,6 +11,8 @@ public class BdTabelaTratamento implements BaseColumns {
     public static final String CAMPO_DESCRICAO = "Descricao";
     private SQLiteDatabase db;
 
+    public static final String [] ALL_COLUMNS = new String[] { _ID, CAMPO_ID_ACIDENTE , CAMPO_DESCRICAO  };
+
     public BdTabelaTratamento(SQLiteDatabase db) {
         this.db = db;
     }
