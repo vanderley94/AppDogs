@@ -4,12 +4,15 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import java.text.BreakIterator;
 
 public class AppDogsContentProvider extends ContentProvider {
 
@@ -20,6 +23,9 @@ public class AppDogsContentProvider extends ContentProvider {
     public static final int ACIDENTE_ID = 201;
     public static final int TRATAMENTO = 300;
     public static final int TRATAMENTO_ID = 301;
+
+    public static final String MULTIPLE_ITEMS = "vnd.android.cursor.dir";
+    public static final String SINGLE_ITEM = "vnd.android.cursor.item";
     BdAppDogsOpenHelper appDogsOpenHelper;
 
     private static UriMatcher getAppDogsUriMatcher(){
@@ -88,22 +94,132 @@ public class AppDogsContentProvider extends ContentProvider {
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
-        return null;
+
+        UriMatcher matcher = getAppDogsUriMatcher();
+        switch (matcher.match(uri)){
+            case RACA:
+                return MULTIPLE_ITEMS + "/" + AUTHORITY + "/" + BdTabelaRaca.NOME_TABELA;
+
+            case ACIDENTE:
+                return MULTIPLE_ITEMS+ "/" + AUTHORITY + "/" + BdTabelaAcidente.NOME_TABELA;
+
+            case TRATAMENTO:
+                return MULTIPLE_ITEMS+ "/" + AUTHORITY + "/" + BdTabelaTratamento.NOME_TABELA;
+
+            case RACA_ID:
+                return SINGLE_ITEM + "/" + AUTHORITY + "/" + BdTabelaRaca.NOME_TABELA;
+
+            case ACIDENTE_ID:
+                return SINGLE_ITEM+ "/" + AUTHORITY + "/" + BdTabelaAcidente.NOME_TABELA;
+
+            case TRATAMENTO_ID:
+                return SINGLE_ITEM+ "/" + AUTHORITY + "/" + BdTabelaTratamento.NOME_TABELA;
+
+            default:
+                throw new UnsupportedOperationException("UnKnown URI"+ uri);
+        }
+
+
     }
 
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-        return null;
+        SQLiteDatabase db = appDogsOpenHelper.getWritableDatabase();
+
+        UriMatcher matcher = getAppDogsUriMatcher();
+
+        long id = -1;
+
+        switch (matcher.match(uri)){
+            case RACA:
+                id = new BdTabelaRaca(db).insert(values);
+                break;
+
+            case ACIDENTE:
+                id = new BdTabelaAcidente(db).insert(values);
+
+            case TRATAMENTO:
+                id = new BdTabelaTratamento(db).insert(values);
+
+            default:
+                throw new UnsupportedOperationException("Invalid URI: "+ uri);
+        }
+
+        if(id > 0){
+            notifyChanges(uri);
+            return Uri.withAppendedPath(uri,Long.toString(id));
+        }else{
+            throw new SQLException("Could not insert record");
+        }
+    }
+
+    private void notifyChanges(@NonNull Uri uri){
+        getContext().getContentResolver().notifyChange(uri,null);
     }
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+
+        SQLiteDatabase db = appDogsOpenHelper.getWritableDatabase();
+
+        UriMatcher matcher = getAppDogsUriMatcher();
+        String id = uri.getLastPathSegment();
+
+        int rows = 0;
+
+        switch (matcher.match(uri)) {
+            case RACA:
+                rows = new BdTabelaRaca(db).delete(BdTabelaRaca._ID + "=?", new String[]{id});
+                break;
+
+            case ACIDENTE:
+                rows = new BdTabelaAcidente(db).delete(BdTabelaAcidente._ID + "=?", new String[]{id});
+                break;
+
+            case TRATAMENTO:
+                rows = new BdTabelaTratamento(db).delete(BdTabelaTratamento._ID + "=?", new String[]{id});
+                break;
+            default:
+                throw new UnsupportedOperationException("Invalid URI: "+ uri);
+        }
+
+        if(rows > 0 ){
+            notifyChanges(uri);
+        }
+        return rows;
+
     }
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+
+        SQLiteDatabase db = appDogsOpenHelper.getWritableDatabase();
+
+        UriMatcher matcher = getAppDogsUriMatcher();
+
+        String id = uri.getLastPathSegment();
+
+        int rows = 0;
+
+        switch (matcher.match(uri)){
+            case RACA_ID:
+                rows = new BdTabelaRaca(db).update(values,BdTabelaRaca._ID+"=?", new String[]{id});
+                break;
+
+            case ACIDENTE_ID:
+                rows = new BdTabelaAcidente(db).update(values,BdTabelaAcidente._ID+"=?", new String[]{id});
+                break;
+
+            case TRATAMENTO_ID:
+                rows = new BdTabelaTratamento(db).update(values,BdTabelaTratamento._ID+"=?", new String[]{id});
+                break;
+        }
+
+        if (rows > 0){
+            notifyChanges(uri);
+        }
+
+        return rows;
     }
 }
