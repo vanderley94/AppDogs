@@ -141,7 +141,7 @@ public class AppDogsBdTests {
 
         return id;
     }
-    
+
     @NonNull
     private Raca ReadFirstRaca(BdTabelaRaca tabelaRaca, String expectedNome, long expectedId){
         Cursor cursor = tabelaRaca.query(BdTabelaRaca.ALL_COLUMNS,null,null,null,null,null );
