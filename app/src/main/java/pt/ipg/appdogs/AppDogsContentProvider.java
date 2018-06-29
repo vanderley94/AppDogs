@@ -17,6 +17,15 @@ import java.text.BreakIterator;
 public class AppDogsContentProvider extends ContentProvider {
 
     public static final String AUTHORITY = "pt.ipg.appdogs";
+
+    public static final Uri Base_URI = Uri.parse("content://" + AUTHORITY);
+    public static final Uri ACIDENTE_URI = Uri.withAppendedPath(Base_URI,BdTabelaAcidente.NOME_TABELA);
+    public static final Uri RACA_URI = Uri.withAppendedPath(Base_URI,BdTabelaRaca.NOME_TABELA);
+
+    public static final Uri TRATAMENTO_URI = Uri.withAppendedPath(Base_URI,BdTabelaTratamento.NOME_TABELA);
+
+
+
     public static final int RACA = 100;
     public static final int RACA_ID = 101;
     public static final int ACIDENTE = 200;

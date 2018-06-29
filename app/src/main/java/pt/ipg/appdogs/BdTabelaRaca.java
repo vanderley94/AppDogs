@@ -32,7 +32,7 @@ public class BdTabelaRaca implements BaseColumns {
     public static ContentValues getContentValues(Raca raca){
         ContentValues values = new ContentValues();
 
-        values.put(_ID,raca.getID());
+        //values.put(_ID,raca.getID());
         values.put(CAMPO_NOME,raca.getNome());
 
         return values;

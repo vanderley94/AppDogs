@@ -1,15 +1,29 @@
 package pt.ipg.appdogs;
 
+import android.content.Context;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CursorAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks <Cursor>{
+
+    private static int ACIDENTE_CURSOR_LOADER_ID = 0;
+    private RecyclerView recyclerViewAci;
+    private AppDogsCursorAdapter appDogsCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +32,42 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
+        });*/
+
+
+
+
+        recyclerViewAci = (RecyclerView) findViewById(R.id.RecyclerViewAci);
+
+        recyclerViewAci.setLayoutManager(new LinearLayoutManager(this));
+        appDogsCursorAdapter = new  AppDogsCursorAdapter(this);
+        recyclerViewAci.setAdapter(appDogsCursorAdapter);
+
+        appDogsCursorAdapter.setViewHolderClickListener(new View.OnClickListener() { // quando clicar para ver a lista
+            @Override
+            public void onClick(View v) {
+                editAppDogs();
+            }
         });
+
+        getSupportLoaderManager().initLoader(ACIDENTE_CURSOR_LOADER_ID, null, this);
+
+    }
+    private void editAppDogs() {
+            ////////////A acrescentar o que visualizar dentro da lista ***********************
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSupportLoaderManager().restartLoader(ACIDENTE_CURSOR_LOADER_ID,null,this); /// Para reustarar
     }
 
     @Override
@@ -48,5 +90,27 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @NonNull
+    @Override
+    public android.support.v4.content.Loader onCreateLoader(int id, @Nullable Bundle args) {
+
+        if(id == ACIDENTE_CURSOR_LOADER_ID){
+            return new CursorLoader(this,AppDogsContentProvider.ACIDENTE_URI, BdTabelaAcidente.ALL_COLUMNS,null,null,null);
+        }
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull android.support.v4.content.Loader<Cursor> loader, Cursor data) {
+        appDogsCursorAdapter.refreahData(data);
+
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull android.support.v4.content.Loader<Cursor> loader) {
+        appDogsCursorAdapter.refreahData(null);
+
     }
 }

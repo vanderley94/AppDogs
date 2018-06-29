@@ -28,13 +28,13 @@ public class BdAppDogsOpenHelper extends SQLiteOpenHelper {
         BdTabelaTratamento bdTabelaTratamento = new BdTabelaTratamento(db);
         bdTabelaTratamento.criar();
 
-        if(!PRODUCTION){
+       if(!PRODUCTION){  ///modo protecao
             seed(db);
         }
 
     }
 
-    private void seed(SQLiteDatabase db){
+    private void seed(SQLiteDatabase db){  //passar dados de para dados
         BdTabelaRaca bdTabelaRaca = new BdTabelaRaca(db);
 
         Raca raca = new Raca();
@@ -51,34 +51,49 @@ public class BdAppDogsOpenHelper extends SQLiteOpenHelper {
         int idRacaLabrador = (int) bdTabelaRaca.insert(BdTabelaRaca.getContentValues(raca));
 
 
+
         BdTabelaAcidente bdTabelaAcidente = new BdTabelaAcidente(db);
 
         Acidente acidente = new Acidente();
         acidente.setTipoDeAcidente("Lesão nas patas");
-        acidente.getIdCao(idRacaPitbul);
+        acidente.setIdCao(idRacaPitbul);
         bdTabelaAcidente.insert(bdTabelaAcidente.getContentValues(acidente));
 
-        int idAcidente =  (int) bdTabelaAcidente.insert(BdTabelaAcidente.getContentValues(acidente));
+        int idAcidenteL =  (int) bdTabelaAcidente.insert(BdTabelaAcidente.getContentValues(acidente));
 
         acidente = new Acidente();
         acidente.setTipoDeAcidente("Lesão na parte de tronco");
-        acidente.getIdCao(idRacaBulldog);
+        acidente.setIdCao(idRacaBulldog);
         bdTabelaAcidente.insert(bdTabelaAcidente.getContentValues(acidente));
+
+        int idAcidenteB =  (int) bdTabelaAcidente.insert(BdTabelaAcidente.getContentValues(acidente));
+
 
         acidente = new Acidente();
         acidente.setTipoDeAcidente("Lesão na cabeça");
-        acidente.getIdCao(idRacaLabrador);
+        acidente.setIdCao(idRacaLabrador);
         bdTabelaAcidente.insert(bdTabelaAcidente.getContentValues(acidente));
-        
+
+        int idAcidenteX =  (int) bdTabelaAcidente.insert(BdTabelaAcidente.getContentValues(acidente));
+
+
 
         BdTabelaTratamento bdTabelaTratamento = new BdTabelaTratamento(db);
 
         Tratamento tratamento = new Tratamento();
         tratamento.setDescricao("Esticar a pena e dirigir ao centro de tramaneto!");
-        tratamento.getIDAcidente(idAcidente);
+        tratamento.setIDAcidente(idAcidenteL);
+        bdTabelaTratamento.insert(bdTabelaTratamento.getContentValues(tratamento));
 
+        tratamento = new Tratamento();
+        tratamento.setDescricao("Estacar o Sangue!");
+        tratamento.setIDAcidente(idAcidenteB);
+        bdTabelaTratamento.insert(bdTabelaTratamento.getContentValues(tratamento));
 
-
+        tratamento = new Tratamento();
+        tratamento.setDescricao("Estacar o Sangue!");
+        tratamento.setIDAcidente(idAcidenteX);
+        bdTabelaTratamento.insert(bdTabelaTratamento.getContentValues(tratamento));
 
     }
 

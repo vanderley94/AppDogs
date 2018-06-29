@@ -23,12 +23,16 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class AppDogsBdTests {
 
+
     private Context getContext() {
         return InstrumentationRegistry.getTargetContext();
     }
+
+
     @Before
     public void setUp() {
-        getContext().deleteDatabase(BdAppDogsOpenHelper.DOGS_DB);
+
+        getContext().deleteDatabase(BdAppDogsOpenHelper.DOGS_DB);   // parafaz debug
     }
 
     @Test
@@ -161,25 +165,5 @@ public class AppDogsBdTests {
         return raca;
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

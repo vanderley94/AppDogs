@@ -32,7 +32,7 @@ public class  BdTabelaAcidente implements BaseColumns {
     public static ContentValues getContentValues(Acidente acidente){
         ContentValues values = new ContentValues();
 
-        values.put(_ID,acidente.getID());
+        //values.put(_ID,acidente.getID());
         values.put(CAMPO_ID_RACA,acidente.getIdCao());
         values.put(CAMPO_TIPO_DE_ACIDENTE,acidente.getTipoDeAcidente());
 

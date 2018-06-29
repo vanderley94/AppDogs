@@ -29,7 +29,7 @@ public class BdTabelaTratamento implements BaseColumns {
     public static ContentValues getContentValues(Tratamento tratamento){
         ContentValues values = new ContentValues();
 
-        values.put(_ID,tratamento.getID());
+        //values.put(_ID,tratamento.getID());
         values.put(CAMPO_ID_ACIDENTE,tratamento.getIDAcidente());
         values.put(CAMPO_DESCRICAO,tratamento.getDescricao());
 
