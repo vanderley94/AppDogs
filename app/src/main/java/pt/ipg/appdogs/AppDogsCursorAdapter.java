@@ -32,7 +32,7 @@ public class AppDogsCursorAdapter extends RecyclerView.Adapter<AppDogsCursorAdap
 
     }
 
-    public int getLastAcidenteClicked(){
+    public  int getLastAcidenteClicked(){
         return lastAcidenteClicked;
     }
 

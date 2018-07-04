@@ -1,6 +1,7 @@
 package pt.ipg.appdogs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -21,7 +22,12 @@ import android.widget.CursorAdapter;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks <Cursor>{
 
+    public static final String ACIDENTE_ID = "ACIDENTE_ID";
     private static int ACIDENTE_CURSOR_LOADER_ID = 0;
+
+
+
+
     private RecyclerView recyclerViewAci;
     private AppDogsCursorAdapter appDogsCursorAdapter;
 
@@ -62,6 +68,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
     private void editAppDogs() {
             ////////////A acrescentar o que visualizar dentro da lista ***********************
+        int id = appDogsCursorAdapter.getLastAcidenteClicked();
+
+        Intent intent = new Intent(this,EditAppActivity.class);
+        intent.putExtra(ACIDENTE_ID,id);
+        startActivity(intent);
     }
 
     @Override
