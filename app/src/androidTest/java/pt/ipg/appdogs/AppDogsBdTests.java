@@ -60,7 +60,9 @@ public class AppDogsBdTests {
         //Insert / create (C)RUD
         Acidente acidente = new Acidente();
 
+        acidente.setNome("Nina");
         acidente.setTipoDeAcidente("Lesao na pata esquerda");
+        acidente.setTratamento("Colocar Gesso");
         acidente.setIdCao((int) idCao);
         long id = tabelaAcidente.insert(BdTabelaAcidente.getContentValues(acidente));
 
@@ -111,7 +113,7 @@ public class AppDogsBdTests {
         long id = insertRaca(tabelaRaca,raca);
 
         //query/read C(R)UD
-        raca = ReadFirstRaca(tabelaRaca,"Labrador",id);
+        raca = ReadFirstRaca(tabelaRaca,"bullDog",id);
 
         //update CR(U)D
         raca.setNome("Labrador");
@@ -123,7 +125,7 @@ public class AppDogsBdTests {
         );
         assertEquals("Falhou a atulização da raça", 1, rowsAffected);
         //query/read C(R)UD
-        raca = ReadFirstRaca(tabelaRaca,"MMMM",id);
+        raca = ReadFirstRaca(tabelaRaca,"Labrador",id);
 
         //delete CRU(D)
         rowsAffected = tabelaRaca.delete(
@@ -149,16 +151,15 @@ public class AppDogsBdTests {
     @NonNull
     private Raca ReadFirstRaca(BdTabelaRaca tabelaRaca, String expectedNome, long expectedId){
         Cursor cursor = tabelaRaca.query(BdTabelaRaca.ALL_COLUMNS,null,null,null,null,null );
-        assertEquals("Falhou a leitura das Raças",1,cursor.getColumnCount());
+        assertEquals("Falhou a leitura das Raças",1,cursor.getCount());///1
         assertTrue("Falhou a leitura da primeira raça",cursor.moveToNext());
 
         Raca raca = BdTabelaRaca.getCurrentRacaFromCursor(cursor);
 
         assertEquals("Nome da raça incorreto",expectedNome,raca.getNome());
-        assertEquals("Nome da raça incorreto",expectedId,raca.getID());
+        assertEquals("Id da raça incorreto",expectedId,raca.getID());
 
-        assertEquals("Incorrect category name", expectedNome, raca.getNome());
-        assertEquals("Incorrect category id", expectedId, raca.getID());
+
 
 
 

@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">AppDogs</string>
     <string name="action_settings">Settings</string>
-    <string name="textview">TextView</string>
+    <string name="textview1">TextView</string>
     <string name="nome">Nome</string>
     <string name="tratamento">Tratamento</string>
     <string name="guardar">Guardar</string>
     <string name="cancelar">Cancelar</string>
+    <string name="raca">Raca</string>
+    <string name="textview">TextView</string>
+
 
 </resources>

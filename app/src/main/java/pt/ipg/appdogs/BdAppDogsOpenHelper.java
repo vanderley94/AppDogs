@@ -25,9 +25,6 @@ public class BdAppDogsOpenHelper extends SQLiteOpenHelper {
         BdTabelaAcidente bdTabelaAcidente = new BdTabelaAcidente(db);
         bdTabelaAcidente.criar();
 
-        BdTabelaTratamento bdTabelaTratamento = new BdTabelaTratamento(db);
-        bdTabelaTratamento.criar();
-
        if(!PRODUCTION){  ///modo protecao
             seed(db);
         }
@@ -86,22 +83,7 @@ public class BdAppDogsOpenHelper extends SQLiteOpenHelper {
 
 
         ///////////////////////////////////////////////////////
-        BdTabelaTratamento bdTabelaTratamento = new BdTabelaTratamento(db);
 
-        Tratamento tratamento = new Tratamento();
-        tratamento.setDescricao("Esticar a pena e dirigir ao centro de tramaneto!");
-        tratamento.setIDAcidente(idAcidenteL);
-        bdTabelaTratamento.insert(bdTabelaTratamento.getContentValues(tratamento));
-
-        tratamento = new Tratamento();
-        tratamento.setDescricao("Estacar o Sangue!");
-        tratamento.setIDAcidente(idAcidenteB);
-        bdTabelaTratamento.insert(bdTabelaTratamento.getContentValues(tratamento));
-
-        tratamento = new Tratamento();
-        tratamento.setDescricao("Estacar o Sangue!");
-        tratamento.setIDAcidente(idAcidenteX);
-        bdTabelaTratamento.insert(bdTabelaTratamento.getContentValues(tratamento));
 
     }
 

@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CancellationSignal;
@@ -22,16 +23,12 @@ public class AppDogsContentProvider extends ContentProvider {
     public static final Uri ACIDENTE_URI = Uri.withAppendedPath(Base_URI,BdTabelaAcidente.NOME_TABELA);
     public static final Uri RACA_URI = Uri.withAppendedPath(Base_URI,BdTabelaRaca.NOME_TABELA);
 
-    public static final Uri TRATAMENTO_URI = Uri.withAppendedPath(Base_URI,BdTabelaTratamento.NOME_TABELA);
-
-
 
     public static final int RACA = 100;
     public static final int RACA_ID = 101;
     public static final int ACIDENTE = 200;
     public static final int ACIDENTE_ID = 201;
-    public static final int TRATAMENTO = 300;
-    public static final int TRATAMENTO_ID = 301;
+
 
     public static final String MULTIPLE_ITEMS = "vnd.android.cursor.dir";
     public static final String SINGLE_ITEM = "vnd.android.cursor.item";
@@ -46,9 +43,6 @@ public class AppDogsContentProvider extends ContentProvider {
 
         uriMatcher.addURI(AUTHORITY,"acidente", ACIDENTE);
         uriMatcher.addURI(AUTHORITY,"acidente/#", ACIDENTE_ID);
-
-        uriMatcher.addURI(AUTHORITY,"tratamento", TRATAMENTO);
-        uriMatcher.addURI(AUTHORITY,"tratamento/#", TRATAMENTO_ID);
 
 
 
@@ -78,8 +72,6 @@ public class AppDogsContentProvider extends ContentProvider {
             case ACIDENTE:
                 return new BdTabelaAcidente(db).query(projection,selection,selectionArgs,null,null,sortOrder);
 
-            case TRATAMENTO:
-                return new BdTabelaAcidente(db).query(projection,selection,selectionArgs,null,null,sortOrder);
 
             case RACA_ID:
                 return new BdTabelaRaca(db).query(projection,BdTabelaRaca._ID + "=?",new String[]{id},null,null,null);
@@ -87,8 +79,7 @@ public class AppDogsContentProvider extends ContentProvider {
             case ACIDENTE_ID:
                 return new BdTabelaAcidente(db).query(projection,BdTabelaAcidente._ID + "=?",new String[]{id},null,null,null);
 
-            case TRATAMENTO_ID:
-                return new BdTabelaAcidente(db).query(projection,BdTabelaAcidente._ID + "=?",new String[]{id},null,null,null);
+
 
             default:
                 throw new UnsupportedOperationException("Invalid URI: " + uri);
@@ -112,8 +103,6 @@ public class AppDogsContentProvider extends ContentProvider {
             case ACIDENTE:
                 return MULTIPLE_ITEMS+ "/" + AUTHORITY + "/" + BdTabelaAcidente.NOME_TABELA;
 
-            case TRATAMENTO:
-                return MULTIPLE_ITEMS+ "/" + AUTHORITY + "/" + BdTabelaTratamento.NOME_TABELA;
 
             case RACA_ID:
                 return SINGLE_ITEM + "/" + AUTHORITY + "/" + BdTabelaRaca.NOME_TABELA;
@@ -121,8 +110,6 @@ public class AppDogsContentProvider extends ContentProvider {
             case ACIDENTE_ID:
                 return SINGLE_ITEM+ "/" + AUTHORITY + "/" + BdTabelaAcidente.NOME_TABELA;
 
-            case TRATAMENTO_ID:
-                return SINGLE_ITEM+ "/" + AUTHORITY + "/" + BdTabelaTratamento.NOME_TABELA;
 
             default:
                 throw new UnsupportedOperationException("UnKnown URI"+ uri);
@@ -148,8 +135,6 @@ public class AppDogsContentProvider extends ContentProvider {
             case ACIDENTE:
                 id = new BdTabelaAcidente(db).insert(values);
 
-            case TRATAMENTO:
-                id = new BdTabelaTratamento(db).insert(values);
 
             default:
                 throw new UnsupportedOperationException("Invalid URI: "+ uri);
@@ -186,9 +171,6 @@ public class AppDogsContentProvider extends ContentProvider {
                 rows = new BdTabelaAcidente(db).delete(BdTabelaAcidente._ID + "=?", new String[]{id});
                 break;
 
-            case TRATAMENTO:
-                rows = new BdTabelaTratamento(db).delete(BdTabelaTratamento._ID + "=?", new String[]{id});
-                break;
             default:
                 throw new UnsupportedOperationException("Invalid URI: "+ uri);
         }
@@ -220,9 +202,6 @@ public class AppDogsContentProvider extends ContentProvider {
                 rows = new BdTabelaAcidente(db).update(values,BdTabelaAcidente._ID+"=?", new String[]{id});
                 break;
 
-            case TRATAMENTO_ID:
-                rows = new BdTabelaTratamento(db).update(values,BdTabelaTratamento._ID+"=?", new String[]{id});
-                break;
         }
 
         if (rows > 0){

@@ -37,22 +37,29 @@ public class  BdTabelaAcidente implements BaseColumns {
         ContentValues values = new ContentValues();
 
         //values.put(_ID,acidente.getID());
+        values.put(CAMPO_NOME,acidente.getNome());
         values.put(CAMPO_ID_RACA,acidente.getIdCao());
         values.put(CAMPO_TIPO_DE_ACIDENTE,acidente.getTipoDeAcidente());
+        values.put(CAMPO_TRATAMENTO,acidente.getTratamento());
 
         return values;
     }
 
     public static Acidente getCurrentAcidenteFromCursor(Cursor cursor) {
+
+        final int posNome = cursor.getColumnIndex(CAMPO_NOME);
         final int posId = cursor.getColumnIndex(_ID);
         final int posIdCao = cursor.getColumnIndex(CAMPO_ID_RACA);
         final int posTipoDeAcidente = cursor.getColumnIndex(CAMPO_TIPO_DE_ACIDENTE);
+        final int posTratamento = cursor.getColumnIndex(CAMPO_TRATAMENTO);
 
         Acidente acidente = new Acidente();
 
+        acidente.setNome(cursor.getString(posNome));
         acidente.setID(cursor.getInt(posId));
         acidente.setIdCao(cursor.getInt(posIdCao));
         acidente.setTipoDeAcidente(cursor.getString(posTipoDeAcidente));
+        acidente.setTratamento(cursor.getString(posTratamento));
 
         return acidente;
     }
