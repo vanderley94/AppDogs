@@ -8,8 +8,12 @@ import android.provider.BaseColumns;
 public class  BdTabelaAcidente implements BaseColumns {
 
     public static final String NOME_TABELA = "Acidente";
+
+    public static final String CAMPO_NOME = "nome";
     public static final String CAMPO_ID_RACA = "IdCao";
     public static final String CAMPO_TIPO_DE_ACIDENTE = "TipoDeAcidente";
+    public static final String CAMPO_TRATAMENTO = "Tratamento";
+
 
 
     public static final String [] ALL_COLUMNS = new String[] { _ID, CAMPO_ID_RACA, CAMPO_TIPO_DE_ACIDENTE };
@@ -20,8 +24,8 @@ public class  BdTabelaAcidente implements BaseColumns {
     }
 
     public void criar(){
-        db.execSQL("CREATE TABLE " + NOME_TABELA + "( " + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "+
-                CAMPO_TIPO_DE_ACIDENTE + " TEXT NOT NULL, " +
+        db.execSQL("CREATE TABLE " + NOME_TABELA + "( " + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "+ CAMPO_NOME + " TEXT NOT NULL,"+
+                CAMPO_TIPO_DE_ACIDENTE + " TEXT NOT NULL, " + CAMPO_TRATAMENTO + " TEXT NOT NULL, " +
                 CAMPO_ID_RACA + " INTEGER," +
                 "FOREIGN KEY (" + CAMPO_ID_RACA + ") REFERENCES " +
                 BdTabelaRaca.NOME_TABELA +

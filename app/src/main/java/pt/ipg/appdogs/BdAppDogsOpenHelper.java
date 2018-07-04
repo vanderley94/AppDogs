@@ -55,14 +55,18 @@ public class BdAppDogsOpenHelper extends SQLiteOpenHelper {
         BdTabelaAcidente bdTabelaAcidente = new BdTabelaAcidente(db);
 
         Acidente acidente = new Acidente();
+        acidente.setNome("Pitbul");
         acidente.setTipoDeAcidente("Lesão nas patas");
+        acidente.setTratamento("Lavar depois passar o antibiotico !");
         acidente.setIdCao(idRacaPitbul);
         bdTabelaAcidente.insert(bdTabelaAcidente.getContentValues(acidente));
 
         int idAcidenteL =  (int) bdTabelaAcidente.insert(BdTabelaAcidente.getContentValues(acidente));
 
         acidente = new Acidente();
+        acidente.setNome("Bulldog");
         acidente.setTipoDeAcidente("Lesão na parte de tronco");
+        acidente.setTratamento("Amarar bem a perna!");
         acidente.setIdCao(idRacaBulldog);
         bdTabelaAcidente.insert(bdTabelaAcidente.getContentValues(acidente));
 
@@ -70,14 +74,18 @@ public class BdAppDogsOpenHelper extends SQLiteOpenHelper {
 
 
         acidente = new Acidente();
+        acidente.setNome("Labrador");
         acidente.setTipoDeAcidente("Lesão na cabeça");
+        acidente.setTratamento(" Estancar o sangue!");
         acidente.setIdCao(idRacaLabrador);
+
         bdTabelaAcidente.insert(bdTabelaAcidente.getContentValues(acidente));
 
         int idAcidenteX =  (int) bdTabelaAcidente.insert(BdTabelaAcidente.getContentValues(acidente));
 
 
 
+        ///////////////////////////////////////////////////////
         BdTabelaTratamento bdTabelaTratamento = new BdTabelaTratamento(db);
 
         Tratamento tratamento = new Tratamento();

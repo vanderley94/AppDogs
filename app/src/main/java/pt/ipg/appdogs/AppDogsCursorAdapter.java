@@ -47,7 +47,7 @@ public class AppDogsCursorAdapter extends RecyclerView.Adapter<AppDogsCursorAdap
     @Override
     public void onBindViewHolder(@NonNull AcidenteViewHolder holder, int position) {
         cursor.moveToPosition(position);
-        Acidente acidente =BdTabelaAcidente.getCurrentAcidenteFromCursor(cursor);
+        Acidente acidente = BdTabelaAcidente.getCurrentAcidenteFromCursor(cursor);
         holder.setAcidente(acidente);
 
     }
@@ -60,7 +60,7 @@ public class AppDogsCursorAdapter extends RecyclerView.Adapter<AppDogsCursorAdap
 
     public class AcidenteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        private TextView textViewIDcao;
+        private TextView textViewNome;
         private TextView textViewAcidente;
         private int acidenteId;
 
@@ -69,14 +69,14 @@ public class AppDogsCursorAdapter extends RecyclerView.Adapter<AppDogsCursorAdap
         public AcidenteViewHolder(View itemView){
 
             super(itemView);
-            textViewIDcao =  (TextView) itemView.findViewById(R.id.textViewIDcao);
+            textViewNome =  (TextView) itemView.findViewById(R.id.textViewNome);
             textViewAcidente = (TextView) itemView.findViewById(R.id.textViewAcidente);
 
             itemView.setOnClickListener(this);
         }
 
         public void setAcidente(Acidente acidente){
-            textViewIDcao.setText(acidente.getIdCao());
+            textViewNome.setText(acidente.getNome());
             textViewAcidente.setText(acidente.getTipoDeAcidente());
             acidenteId = acidente.getID();
         }
@@ -95,6 +95,5 @@ public class AppDogsCursorAdapter extends RecyclerView.Adapter<AppDogsCursorAdap
 
 
     }
-
 
 }
