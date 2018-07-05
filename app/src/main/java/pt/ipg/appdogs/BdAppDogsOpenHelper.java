@@ -25,7 +25,7 @@ public class BdAppDogsOpenHelper extends SQLiteOpenHelper {
         BdTabelaAcidente bdTabelaAcidente = new BdTabelaAcidente(db);
         bdTabelaAcidente.criar();
 
-       if(!PRODUCTION){  ///modo protecao
+       if(!PRODUCTION){  ///
             seed(db);
         }
 
@@ -58,7 +58,6 @@ public class BdAppDogsOpenHelper extends SQLiteOpenHelper {
         acidente.setIdCao(idRacaPitbul);
         bdTabelaAcidente.insert(bdTabelaAcidente.getContentValues(acidente));
 
-        int idAcidenteL =  (int) bdTabelaAcidente.insert(BdTabelaAcidente.getContentValues(acidente));
 
         acidente = new Acidente();
         acidente.setNome("Bulldog");
@@ -67,7 +66,6 @@ public class BdAppDogsOpenHelper extends SQLiteOpenHelper {
         acidente.setIdCao(idRacaBulldog);
         bdTabelaAcidente.insert(bdTabelaAcidente.getContentValues(acidente));
 
-        int idAcidenteB =  (int) bdTabelaAcidente.insert(BdTabelaAcidente.getContentValues(acidente));
 
 
         acidente = new Acidente();
@@ -77,12 +75,6 @@ public class BdAppDogsOpenHelper extends SQLiteOpenHelper {
         acidente.setIdCao(idRacaLabrador);
 
         bdTabelaAcidente.insert(bdTabelaAcidente.getContentValues(acidente));
-
-        int idAcidenteX =  (int) bdTabelaAcidente.insert(BdTabelaAcidente.getContentValues(acidente));
-
-
-
-        ///////////////////////////////////////////////////////
 
 
     }
